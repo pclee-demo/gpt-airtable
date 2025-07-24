@@ -1,0 +1,66 @@
+openapi: 3.1.0
+info:
+  title: Airtable Task Creator
+  version: 1.0.0
+  description: Adds onboarding tasks to the Airtable table for NAB.
+servers:
+  - url: https://api.airtable.com/v0/apprwSu9Ndx7r7ngn
+paths:
+  /Onboarding%20Tasks:
+    post:
+      operationId: createOnboardingTask
+      summary: Add a task to Airtable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fields:
+                  type: object
+                  properties:
+                    Task:
+                      type: string
+                    Client Name:
+                      type: string
+                    Due Date:
+                      type: string
+                      format: date
+                    Owner:
+                      type: string
+                    Status:
+                      type: string
+                      enum:
+                        - To Do
+                        - In Progress
+                        - Complete
+                    Priority:
+                      type: string
+                      enum:
+                        - High
+                        - Medium
+                        - Low
+                    Notes:
+                      type: string
+              required:
+                - fields
+      responses:
+        "200":
+          description: Task created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  createdTime:
+                    type: string
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - BearerAuth: []
